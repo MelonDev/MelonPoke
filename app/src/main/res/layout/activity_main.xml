@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.activity.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground"
+    tools:context=".ui.main.fragment.HomeFragment">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="56dp">
 
-        <FrameLayout
-            android:id="@+id/main_activity_frame"
+        <androidx.appcompat.widget.Toolbar
+            android:theme="@style/AppbarTheme"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/colorPrimary"
             />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </RelativeLayout>
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_activity_frame"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
