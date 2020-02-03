@@ -10,7 +10,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/colorLightGrey</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarColor">@color/colorLightGrey</item>
+        <item name="android:navigationBarColor">@color/colorWhite</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
 
     </style>
