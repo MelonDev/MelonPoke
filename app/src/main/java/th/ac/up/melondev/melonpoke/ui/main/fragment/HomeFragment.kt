@@ -35,17 +35,17 @@ class HomeFragment : Fragment() {
         viewModel.loadData().observe(viewLifecycleOwner, Observer { model ->
             when (model.status) {
                 Status.LOADING -> {
-                    //message.text = "loading data from network"
+                    Log.e("DRAWER","loading data from network")
                 }
                 Status.SUCCESS -> {
                     val drawer  = model.data
                     drawer?.let {
-                        //message.text = person.firstName + " " + person.lastName + "\n" + person.email
                         Log.e("DRAWER",it.count.toString())
                     }
                 }
                 Status.ERROR -> {
-                    //essage.text = "error loading data from network"
+                    Log.e("DRAWER","error loading data from network")
+
                 }
             }
         })
