@@ -8,9 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/sf_compact_round</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/colorWhite</item>
+        <item name="android:statusBarColor">@color/colorLightGrey</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarColor">@color/colorWhite</item>
+        <item name="android:navigationBarColor">@color/colorLightGrey</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
