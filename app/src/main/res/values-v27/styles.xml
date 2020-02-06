@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -21,8 +21,17 @@
     </style>
 
     <style name="AppbarTheme" parent="AppTheme">
+        <item name="android:iconTint">@color/colorPrimary</item>
+
         <item name="android:fontFamily">@font/sf_compact_round_semibold</item>
 
+    </style>
+
+    <style name="CustomProgressBarTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar" >true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -1,6 +1,5 @@
 package th.ac.up.melondev.melonpoke.data
 
-import android.util.Log
 import com.google.gson.GsonBuilder
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -12,32 +11,34 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitClient {
 
+    companion object {
+        fun <T> createService(t: Class<T>?): T = RetrofitClient().createService(t)
+    }
+
     private val okHttpClient by lazy { OkHttpClient() }
 
     private val retrofit: Retrofit by lazy {
-        Log.e("RetrofitClient", "Creating Retrofit Client")
-        val builder = Retrofit.Builder()
-            .baseUrl("https://pokeapi.co")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-        val dispatcher = Dispatcher()
-        dispatcher.maxRequests = 1
-
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-        val client: OkHttpClient = okHttpClient.newBuilder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .addInterceptor(loggingInterceptor)
-            .dispatcher(dispatcher)
-            .build()
-        builder.client(client).build()
+        initialBuilder().client(initialClient()).build()
     }
 
-    fun <T> createService(tClass: Class<T>?): T {
-        return retrofit.create(tClass)
+    private fun initialBuilder() :Retrofit.Builder = Retrofit.Builder()
+        .baseUrl("https://pokeapi.co/api/v2/")
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+
+    private fun initialClient() :OkHttpClient = okHttpClient.newBuilder()
+        .connectTimeout(10, TimeUnit.SECONDS)
+        .writeTimeout(10, TimeUnit.SECONDS)
+        .readTimeout(20, TimeUnit.SECONDS)
+        //.addInterceptor(initialLoggingInterceptor())
+        .dispatcher(Dispatcher().apply { maxRequests = 1 })
+        .build()
+
+    private fun initialLoggingInterceptor():HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
     }
+
+    fun <T> createService(tClass: Class<T>?): T = retrofit.create(tClass)
+
 
 }

@@ -5,25 +5,17 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackground"
-    tools:context=".ui.main.fragment.HomeFragment">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp">
-
-        <androidx.appcompat.widget.Toolbar
-            android:theme="@style/AppbarTheme"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:title="@string/app_name"
-            app:titleTextColor="@color/colorPrimary"
-            />
-    </com.google.android.material.appbar.AppBarLayout>
+    tools:context=".ui.home.HomeFragment">
 
     <FrameLayout
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_activity_frame"
         />
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

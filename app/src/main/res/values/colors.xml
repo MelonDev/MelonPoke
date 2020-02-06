@@ -7,6 +7,13 @@
     <color name="colorBackground">#EDEDED</color>
 
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorDialogWhiteBackground">#61555555</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="colorText">#3F3F3F</color>
+
+
     <color name="colorLightGrey">#F0F0F0</color>
 
 
