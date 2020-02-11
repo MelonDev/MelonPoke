@@ -50,7 +50,6 @@ class TypeDialogFragment : DialogFragment() {
 
         val pack = arguments?.getParcelable<PokemonTypeDetailPack>("POKEMON_TYPE_DETAIL_MODEL_PACK")
 
-
         detail_type_dialog_back.setOnClickListener {
             this.dismiss()
         }
@@ -61,8 +60,6 @@ class TypeDialogFragment : DialogFragment() {
             mergingDetailData(it)
 
         }
-
-
     }
 
     private fun initialDetailHeader(pack: PokemonTypeDetailPack): ArrayList<Parcelable> {
@@ -168,8 +165,6 @@ class TypeDialogFragment : DialogFragment() {
     private fun packingPokemonTypeList(
         title: String,
         typeList: List<PokemonURIResult>?
-    ): PokemonSmallTypeListModel {
-        return PokemonSmallTypeListModel(title,typeList)
-    }
+    ): PokemonSmallTypeListModel = PokemonSmallTypeListModel(title,typeList)
 
 }
