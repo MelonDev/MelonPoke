@@ -289,6 +289,8 @@ class HomeFragment : Fragment() {
 
             homeAdapter.update(pokeList, pokeStore)
 
+            savedInstanceState.clear()
+
         } ?: run {
             loadAllDetail(networkAllDetailCallback())
         }
