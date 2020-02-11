@@ -1,7 +1,9 @@
 package th.ac.up.melondev.melonpoke.ui.detail
 
 import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -12,11 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_pokemon_detail.*
 import th.ac.up.melondev.melonpoke.R
 import th.ac.up.melondev.melonpoke.data.model.api.*
-import th.ac.up.melondev.melonpoke.data.model.local.PokemonImageModel
-import th.ac.up.melondev.melonpoke.data.model.local.PokemonInformationModel
-import th.ac.up.melondev.melonpoke.data.model.local.PokemonTitleModel
-import th.ac.up.melondev.melonpoke.data.model.local.PokemonTypeListModel
+import th.ac.up.melondev.melonpoke.data.model.local.*
 import th.ac.up.melondev.melonpoke.data.viewmodel.DetailViewModel
+import th.ac.up.melondev.melonpoke.ui.dialog.TypeDialogFragment
+import th.ac.up.melondev.melonpoke.ui.dialog.TypeLoadingDialogFragment
 import th.ac.up.melondev.melonpoke.utill.*
 
 class PokemonDetailActivity : AppCompatActivity() {
@@ -28,14 +29,16 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     private var pokemonTypeLibrary: PokemonTypeLibrary = PokemonTypeLibrary(context = this)
 
+    private var loadingDialogFragment: TypeLoadingDialogFragment? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokemon_detail)
-        restoreState(savedInstanceState)
+
         initialToolbar()
         initialRecyclerView()
-        loadDetail(callback())
+        restoreState(savedInstanceState)
     }
 
     private fun callback(): NetworkCallback<List<PokemonTypeDetailModel>> =
@@ -102,33 +105,34 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     private fun initialDamageDetail(dataList: List<PokemonTypeDetailModel>): ArrayList<Parcelable> {
 
-        var doubleDamageFrom: ArrayList<PokemonURIModel> = ArrayList()
-        var halfDamageFrom: ArrayList<PokemonURIModel> = ArrayList()
-        var noDamageFrom: ArrayList<PokemonURIModel> = ArrayList()
-        var doubleDamageTo: ArrayList<PokemonURIModel> = ArrayList()
-        var halfDamageTo: ArrayList<PokemonURIModel> = ArrayList()
-        var noDamageTo: ArrayList<PokemonURIModel> = ArrayList()
+        var doubleDamageFrom: ArrayList<PokemonURIResult> = ArrayList()
+        var halfDamageFrom: ArrayList<PokemonURIResult> = ArrayList()
+        var noDamageFrom: ArrayList<PokemonURIResult> = ArrayList()
+        var doubleDamageTo: ArrayList<PokemonURIResult> = ArrayList()
+        var halfDamageTo: ArrayList<PokemonURIResult> = ArrayList()
+        var noDamageTo: ArrayList<PokemonURIResult> = ArrayList()
 
         dataList.mapNotNull {
 
             it.damageRelations.apply {
                 this?.doubleDamageFrom?.let { list ->
-                    doubleDamageFrom = ArrayList(list)
+                    doubleDamageFrom.addAll(list)
                 }
                 this?.halfDamageFrom?.let { list ->
-                    halfDamageFrom = ArrayList(list)
+                    halfDamageFrom.addAll(list)
+
                 }
                 this?.noDamageFrom?.let { list ->
-                    noDamageFrom = ArrayList(list)
+                    noDamageFrom.addAll(list)
                 }
                 this?.doubleDamageTo?.let { list ->
-                    doubleDamageTo = ArrayList(list)
+                    doubleDamageTo.addAll(list)
                 }
                 this?.halfDamageTo?.let { list ->
-                    halfDamageTo = ArrayList(list)
+                    halfDamageTo.addAll(list)
                 }
                 this?.noDamageTo?.let { list ->
-                    noDamageTo = ArrayList(list)
+                    noDamageTo.addAll(list)
                 }
 
             }
@@ -139,41 +143,85 @@ class PokemonDetailActivity : AppCompatActivity() {
             if (doubleDamageFrom.isNotEmpty() || doubleDamageTo.isNotEmpty()) {
                 add(PokemonTitleModel(value = "Double Damage"))
                 if (doubleDamageFrom.isNotEmpty()) {
+                    val a = packingPokemonTypeList(
+                        title = "From",
+                        typeList = doubleDamageFrom.distinctBy {
+                            it.name
+                        }
+
+                    )
+
+
                     this.add(
-                        PokemonTypeListModel(
+                        packingPokemonTypeList(
                             title = "From",
-                            typeList = doubleDamageFrom
+                            typeList = doubleDamageFrom.distinctBy {
+                                it.name
+                            }
+
                         )
                     )
                 }
                 if (doubleDamageTo.isNotEmpty()) {
-                    this.add(PokemonTypeListModel(title = "To", typeList = doubleDamageTo))
+                    this.add(
+                        packingPokemonTypeList(
+                            title = "To",
+                            typeList = doubleDamageTo.distinctBy {
+                                it.name
+                            })
+                    )
                 }
             }
 
             if (halfDamageFrom.isNotEmpty() || halfDamageTo.isNotEmpty()) {
                 add(PokemonTitleModel(value = "Half Damage"))
                 if (halfDamageFrom.isNotEmpty()) {
-                    this.add(PokemonTypeListModel(title = "From", typeList = halfDamageFrom))
+                    this.add(
+                        packingPokemonTypeList(
+                            title = "From",
+                            typeList = halfDamageFrom.distinctBy {
+                                it.name
+                            })
+                    )
                 }
                 if (halfDamageTo.isNotEmpty()) {
-                    this.add(PokemonTypeListModel(title = "To", typeList = halfDamageTo))
+                    this.add(
+                        packingPokemonTypeList(
+                            title = "To",
+                            typeList = halfDamageTo.distinctBy {
+                                it.name
+                            })
+                    )
                 }
             }
 
             if (noDamageFrom.isNotEmpty() || noDamageTo.isNotEmpty()) {
                 add(PokemonTitleModel(value = "No Damage"))
                 if (noDamageFrom.isNotEmpty()) {
-                    this.add(PokemonTypeListModel(title = "From", typeList = noDamageFrom))
+                    this.add(
+                        packingPokemonTypeList(
+                            title = "From",
+                            typeList = noDamageFrom.distinctBy {
+                                it.name
+                            })
+                    )
                 }
                 if (noDamageTo.isNotEmpty()) {
-                    this.add(PokemonTypeListModel(title = "To", typeList = noDamageTo))
+                    this.add(packingPokemonTypeList(title = "To", typeList = noDamageTo.distinctBy {
+                        it.name
+                    }))
                 }
             }
 
         }
     }
 
+    private fun packingPokemonTypeList(
+        title: String,
+        typeList: List<PokemonURIResult>?
+    ): PokemonTypeListModel {
+        return PokemonTypeListModel(title, typeList, onTypeItemClick)
+    }
 
     private fun initialRecyclerView() {
         detailAdapter = PokemonDetailAdapter()
@@ -203,15 +251,19 @@ class PokemonDetailActivity : AppCompatActivity() {
                 )
             )
             add(
-                PokemonTypeListModel(
+                packingPokemonTypeList(
                     title = "Type",
-                    typeList = convertTypeSlotToURIModel(pokemonDetail?.types)
+                    typeList = convertTypeSlotToURIModel(pokemonDetail?.types?.sortedBy { it.slot })
                 )
             )
         }
     }
 
-    private fun convertTypeSlotToURIModel(list: List<PokemonTypeSlotModel>?): List<PokemonURIModel>? {
+    private fun setupLoadingDialog() {
+        this.loadingDialogFragment = TypeLoadingDialogFragment.newInstance()
+    }
+
+    private fun convertTypeSlotToURIModel(list: List<PokemonTypeSlotModel>?): List<PokemonURIResult>? {
         return list?.mapNotNull {
             it.type
         } ?: run {
@@ -222,24 +274,94 @@ class PokemonDetailActivity : AppCompatActivity() {
     private fun restoreState(savedInstanceState: Bundle?) {
         val intent = intent.extras
 
+        hideLoading()
+
         savedInstanceState?.let {
             pokemonDetail = it.getParcelable("SAVE_DATAIL")
+            detailAdapter.update(it.getParcelableArrayList<Parcelable>("TYPE_DATAIL"))
         } ?: run {
             pokemonDetail = intent?.getParcelable("DETAIL")
             intent?.remove("DETAIL")
+
+            loadDetail(callback())
         }
     }
 
     private fun initialToolbar() {
-        pokemon_detail_toolbar.title = pokemonDetail?.name?.capitalize()
-        pokemon_detail_toolbar.setNavigationOnClickListener {
+        pokemon_detail_back.setOnClickListener {
             finish()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putParcelable("SAVE_DATAIL", pokemonDetail)
+        detailAdapter.data?.let {
+            outState.putParcelableArrayList("TYPE_DATAIL", it)
+        }
         super.onSaveInstanceState(outState)
+    }
+
+    private val onTypeItemClick = object : PokemonTypeListener {
+        override fun onClick(model: PokemonTypeModel) {
+
+            viewModel.loadPokemonTypeDetail(model)
+                .observe(this@PokemonDetailActivity, observer)
+
+            Log.e("LOGING", "getTypeListener")
+        }
+
+        override fun writeToParcel(dest: Parcel?, flags: Int) {
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+    }
+
+    val observer = Observer<NetworkResponse<PokemonTypeDetailPack>> { model ->
+        when (model.status) {
+            Status.LOADING -> {
+                Log.e("HELLO", "LOADING")
+
+                resultCallback.onLoading()
+            }
+            Status.SUCCESS -> {
+                Log.e("HELLO", "HELLO")
+                resultCallback.onSuccess(model.data)
+
+            }
+            Status.ERROR -> {
+                Log.e("HELLO", "ERROR")
+
+                resultCallback.onError()
+            }
+        }
+    }
+
+    private val resultCallback = object : NetworkCallback<PokemonTypeDetailPack> {
+        override fun onSuccess(data: PokemonTypeDetailPack?) {
+
+            loadingDialogFragment?.dismiss()
+            loadingDialogFragment = null
+            data?.let {
+                val dialogFragment = TypeDialogFragment.newInstance(it)
+                dialogFragment?.show(supportFragmentManager, "DIALOG")
+            }
+        }
+
+        override fun onError() {
+        }
+
+        override fun onLoading() {
+            loadingDialogFragment?.let {
+                it.show(supportFragmentManager, "LOADING")
+            } ?: run {
+                setupLoadingDialog()
+                loadingDialogFragment?.show(supportFragmentManager, "LOADING")
+            }
+
+
+        }
     }
 
 }

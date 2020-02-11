@@ -14,13 +14,11 @@ class DetailInformationViewHolder(itemView: View) : BaseViewHolder<Parcelable>(i
     private val experience = itemView.detail_information_be_text
 
 
-    override fun bind(data: Parcelable) {
-        val info = data as PokemonInformationModel
-
-        name.text = info.name?.capitalize()
-        weight.text = info.weight.toString()
-        height.text = info.height.toString()
-        experience.text = info.base_experience.toString()
+    fun bind(data: PokemonInformationModel) {
+        name.text = data.name?.capitalize()
+        weight.text = data.weight.toString()
+        height.text = data.height.toString()
+        experience.text = data.base_experience.toString()
 
     }
 

@@ -3,9 +3,7 @@ package th.ac.up.melondev.melonpoke.data.viewmodel
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import retrofit2.Response
-import th.ac.up.melondev.melonpoke.data.model.api.PokemonDetailModel
 import th.ac.up.melondev.melonpoke.data.model.api.PokemonDrawerModel
-import th.ac.up.melondev.melonpoke.data.model.local.PokemonTypeModel
 import th.ac.up.melondev.melonpoke.data.repository.PokemonRepository
 import th.ac.up.melondev.melonpoke.utill.NetworkResponse
 

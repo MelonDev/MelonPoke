@@ -9,8 +9,8 @@ import th.ac.up.melondev.melonpoke.ui.main.base.BaseViewHolder
 class DetailTitleViewHolder(itemView: View) : BaseViewHolder<Parcelable>(itemView) {
     private val title = itemView.detail_title_layout_text
 
-    override fun bind(data: Parcelable) {
-        title.text = (data as PokemonTitleModel).value
+    fun bind(data: PokemonTitleModel) {
+        title.text = data.value
     }
 
 }

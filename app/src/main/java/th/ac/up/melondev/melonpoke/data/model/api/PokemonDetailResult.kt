@@ -30,7 +30,7 @@ data class PokemonDetailModel(
     @SerializedName("is_default") var is_default: Boolean? = null,
     @SerializedName("location_area_encounters") var location_area_encounters: URI? = null,
     @SerializedName("order") var order: Int? = null,
-    @SerializedName("species") var species: PokemonURIModel? = null,
+    @SerializedName("species") var species: PokemonURIResult? = null,
 
     @SerializedName("game_indices") var game_indices: List<PokemonGameIndicesModel>? = null,
 
@@ -50,7 +50,7 @@ data class PokemonDetailModel(
 @Keep
 data class PokemonTypeSlotModel(
     @SerializedName("slot") var slot: Int? = null,
-    @SerializedName("type") var type: PokemonURIModel? = null
+    @SerializedName("type") var type: PokemonURIResult? = null
 ): Parcelable
 
 @Parcelize
@@ -58,13 +58,13 @@ data class PokemonTypeSlotModel(
 data class PokemonStatsModel(
     @SerializedName("base_stat") var base_stat: Int? = null,
     @SerializedName("effort") var effort: Int? = null,
-    @SerializedName("stat") var stat: PokemonURIModel? = null
+    @SerializedName("stat") var stat: PokemonURIResult? = null
 ): Parcelable
 
 @Parcelize
 @Keep
 data class PokemonHeldItemsModel(
-    @SerializedName("item") var stat: PokemonURIModel? = null,
+    @SerializedName("item") var stat: PokemonURIResult? = null,
     @SerializedName("version_details") var version_details: List<PokemonVersionDetailModel>? = null
 
 ): Parcelable
@@ -73,14 +73,14 @@ data class PokemonHeldItemsModel(
 @Keep
 data class PokemonVersionDetailModel(
     @SerializedName("rarity") var rarity: Int? = null,
-    @SerializedName("version") var version: PokemonURIModel? = null
+    @SerializedName("version") var version: PokemonURIResult? = null
 ): Parcelable
 
 @Parcelize
 @Keep
 data class PokemonGameIndicesModel(
     @SerializedName("game_index") var game_index: Int? = null,
-    @SerializedName("version") var version: PokemonURIModel? = null
+    @SerializedName("version") var version: PokemonURIResult? = null
 
 ): Parcelable
 
@@ -89,14 +89,14 @@ data class PokemonGameIndicesModel(
 data class PokemonAbilitiesModel(
     @SerializedName("is_hidden") var is_hidden: Boolean? = null,
     @SerializedName("slot") var slot: Int? = null,
-    @SerializedName("ability") var ability: PokemonURIModel? = null
+    @SerializedName("ability") var ability: PokemonURIResult? = null
 
 ): Parcelable
 
 @Parcelize
 @Keep
 data class PokemonMoveModel(
-    @SerializedName("move") var move: PokemonURIModel? = null,
+    @SerializedName("move") var move: PokemonURIResult? = null,
     @SerializedName("version_group_details") var version_group_details: List<PokemonVersionGroupDetailModel>? = null
 
 ): Parcelable
@@ -105,7 +105,7 @@ data class PokemonMoveModel(
 @Keep
 data class PokemonVersionGroupDetailModel(
     @SerializedName("level_learned_at") var level_learned_at: Int? = null,
-    @SerializedName("move_learn_method") var move_learn_method: PokemonURIModel? = null
+    @SerializedName("move_learn_method") var move_learn_method: PokemonURIResult? = null
 ): Parcelable
 
 

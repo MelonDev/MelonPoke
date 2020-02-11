@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import th.ac.up.melondev.melonpoke.R
 import th.ac.up.melondev.melonpoke.data.model.api.PokemonTypeSlotModel
+import th.ac.up.melondev.melonpoke.data.model.local.PokemonSmallTypeModel
 import th.ac.up.melondev.melonpoke.data.model.local.PokemonTypeModel
 
 class PokemonTypeLibrary(private val context: Context) {
@@ -26,12 +27,14 @@ class PokemonTypeLibrary(private val context: Context) {
             add(dataToPokemonType("fire", R.drawable.fire, R.drawable.type_background_fire))
             add(dataToPokemonType("water", R.drawable.water, R.drawable.type_background_water))
             add(dataToPokemonType("grass", R.drawable.grass, R.drawable.type_background_grass))
+            add(dataToPokemonType("electric", R.drawable.electric, R.drawable.type_background_electric))
             add(dataToPokemonType("psychic",R.drawable.psychic,R.drawable.type_background_psychic))
             add(dataToPokemonType("ice", R.drawable.ice, R.drawable.type_background_ice))
             add(dataToPokemonType("dragon", R.drawable.dragon, R.drawable.type_background_dragon))
             add(dataToPokemonType("dark", R.drawable.dark, R.drawable.type_background_dark))
             add(dataToPokemonType("fairy", R.drawable.fairy, R.drawable.type_background_fairy))
             add(dataToPokemonType("shadow", R.drawable.dark, R.drawable.type_background_dark))
+
         }
     }
 
@@ -44,8 +47,17 @@ class PokemonTypeLibrary(private val context: Context) {
         return if (arr.isNotEmpty()) arr.first() else null
     }
 
+    fun getPokemonSmallTypeModel(type: String): PokemonSmallTypeModel? {
+
+        val arr = data.filter {
+            it?.name.toString().contentEquals(type)
+        }
+
+        return if (arr.isNotEmpty()) {convertToSmall(arr.first())} else null
+    }
+
     fun getPokemonTypeModel(pokemonType: List<PokemonTypeSlotModel>?): PokemonTypeModel? {
-        val slot = pokemonType?.first() ?: run {
+        val slot = pokemonType?.sortedBy { it.slot }?.first() ?: run {
             return null
         }
 
@@ -61,5 +73,5 @@ class PokemonTypeLibrary(private val context: Context) {
 
     private fun convert(resource: Int): Drawable? = ContextCompat.getDrawable(context, resource)
 
-
+    private fun convertToSmall(old :PokemonTypeModel?):PokemonSmallTypeModel? = PokemonSmallTypeModel(old?.name,old?.image,old?.background)
 }

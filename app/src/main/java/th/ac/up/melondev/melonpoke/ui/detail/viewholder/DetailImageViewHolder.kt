@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlinx.android.synthetic.main.detail_image_layout.view.*
 
 import th.ac.up.melondev.melonpoke.data.model.local.PokemonImageModel
@@ -17,16 +18,16 @@ class DetailImageViewHolder(itemView: View) : BaseViewHolder<Parcelable>(itemVie
     private val background: ImageView = itemView.detail_image_layout_imageview_bg
 
 
-    override fun bind(data: Parcelable) {
-
-        val slot = (data as PokemonImageModel)
+    fun bind(data: PokemonImageModel) {
 
         Glide.with(itemView.context)
-            .load(slot.value)
+            .load(data.value)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
 
         Glide.with(itemView.context)
-            .load(slot.pokemonType?.background)
+            .load(data.pokemonType?.background)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(background)
 
 

@@ -8,7 +8,7 @@ import java.net.URI
 
 @Parcelize
 @Keep
-data class PokemonURIModel(
+data class PokemonURIResult(
     @SerializedName("name") var name: String? = null,
     @SerializedName("url") var url: URI? = null
 ): Parcelable

@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jcodecraeer.xrecyclerview.ArrowRefreshHeader
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import kotlinx.android.synthetic.main.home_fragment.*
 import th.ac.up.melondev.melonpoke.R
@@ -127,6 +128,7 @@ class HomeFragment : Fragment() {
         limit: Int,
         callback: NetworkCallback<List<PokemonDetailModel>>
     ) {
+
         viewModel.loadPokemonAll(offset = offset, limit = limit)
             .observe(viewLifecycleOwner, Observer { model ->
                 when (model.status) {
@@ -161,7 +163,11 @@ class HomeFragment : Fragment() {
 
             homeAdapter = HomeFragmentAdapter()
 
+
+
             home_fragment_recyclerView.apply {
+                setFootViewText("Loading..","Not found")
+
                 this.layoutManager = GridLayoutManager(context, mNoOfColumns)
                 this.isNestedScrollingEnabled = false
                 this.onFlingListener = null

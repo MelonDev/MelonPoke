@@ -2,15 +2,20 @@ package th.ac.up.melondev.melonpoke.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import th.ac.up.melondev.melonpoke.R
+import th.ac.up.melondev.melonpoke.data.viewmodel.DetailViewModel
 import th.ac.up.melondev.melonpoke.ui.home.HomeFragment
+import th.ac.up.melondev.melonpoke.utill.Status
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fragment: Fragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,7 +7,7 @@ import th.ac.up.melondev.melonpoke.data.model.api.PokemonDetailModel
 import th.ac.up.melondev.melonpoke.ui.main.base.BaseViewHolder
 import th.ac.up.melondev.melonpoke.utill.getViewFromLayoutInflater
 
-class HomeFragmentAdapter : RecyclerView.Adapter<BaseViewHolder<PokemonDetailModel>>() {
+class HomeFragmentAdapter : RecyclerView.Adapter<HomeFragmentViewHolder>() {
 
     var data: ArrayList<PokemonDetailModel>? = ArrayList()
     var storeData: ArrayList<PokemonDetailModel>? = null
@@ -15,7 +15,7 @@ class HomeFragmentAdapter : RecyclerView.Adapter<BaseViewHolder<PokemonDetailMod
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<PokemonDetailModel> {
+    ): HomeFragmentViewHolder {
         return HomeFragmentViewHolder(
             parent.getViewFromLayoutInflater(
                 R.layout.item_home_fragment
@@ -25,7 +25,8 @@ class HomeFragmentAdapter : RecyclerView.Adapter<BaseViewHolder<PokemonDetailMod
 
     override fun getItemCount(): Int = data?.size ?: 0
 
-    override fun onBindViewHolder(holder: BaseViewHolder<PokemonDetailModel>, position: Int) {
+    override fun onBindViewHolder(holder: HomeFragmentViewHolder, position: Int) {
+
         data?.let {
             holder.bind(it[position])
         }
