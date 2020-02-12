@@ -143,14 +143,6 @@ class PokemonDetailActivity : AppCompatActivity() {
             if (doubleDamageFrom.isNotEmpty() || doubleDamageTo.isNotEmpty()) {
                 add(PokemonTitleModel(value = "Double Damage"))
                 if (doubleDamageFrom.isNotEmpty()) {
-                    val a = packingPokemonTypeList(
-                        title = "From",
-                        typeList = doubleDamageFrom.distinctBy {
-                            it.name
-                        }
-
-                    )
-
 
                     this.add(
                         packingPokemonTypeList(

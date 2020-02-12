@@ -23,6 +23,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun loadData(offset: Int, limit: Int) = liveData(Dispatchers.IO) {
+
         emit(NetworkResponse.loading())
         val response: Response<PokemonDrawerModel> = repository.getPokemonList(offset, limit)
         if (response.isSuccessful) {
@@ -33,9 +34,9 @@ class HomeViewModel : ViewModel() {
     }
 
     fun loadPokemonAll(offset: Int = 0,limit: Int) = liveData(Dispatchers.IO) {
+
         emit(NetworkResponse.loading())
         val response: Response<PokemonDrawerModel> = repository.getPokemonList(offset,limit)
-
         val pokemonDrawerModelList = response.body()?.results ?: ArrayList()
 
         val pokemonList = pokemonDrawerModelList.mapNotNull {
@@ -45,8 +46,5 @@ class HomeViewModel : ViewModel() {
         }
         emit(NetworkResponse.success(pokemonList))
     }
-
-
-
 
 }

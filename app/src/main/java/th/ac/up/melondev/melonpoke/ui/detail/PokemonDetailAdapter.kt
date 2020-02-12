@@ -12,12 +12,11 @@ import th.ac.up.melondev.melonpoke.ui.main.base.BaseViewHolder
 import th.ac.up.melondev.melonpoke.ui.detail.viewholder.DetailTypeViewHolder
 import th.ac.up.melondev.melonpoke.ui.detail.viewholder.DetailUnknownViewHolder
 import th.ac.up.melondev.melonpoke.utill.getViewFromLayoutInflater
+import java.util.*
 
 class PokemonDetailAdapter : RecyclerView.Adapter<BaseViewHolder<Parcelable>>() {
 
     var data: ArrayList<Parcelable>? = null
-    //var onDetailItemClick: () -> Unit = {}
-    //var onTypeItemClick: () -> Unit = {}
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -96,14 +95,5 @@ class PokemonDetailAdapter : RecyclerView.Adapter<BaseViewHolder<Parcelable>>() 
         data = newData
         notifyDataSetChanged()
     }
-
-    /*fun setOnDetailItemClick() {
-
-    }
-
-    fun setOnTypeItemClick() {
-
-    }
-     */
 
 }

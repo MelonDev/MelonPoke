@@ -1,7 +1,5 @@
 package th.ac.up.melondev.melonpoke.data.viewmodel
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -11,18 +9,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import th.ac.up.melondev.melonpoke.data.model.api.PokemonDetailModel
-import th.ac.up.melondev.melonpoke.data.model.api.PokemonTypeDetailModel
 import th.ac.up.melondev.melonpoke.data.model.local.PokemonTypeDetailPack
 import th.ac.up.melondev.melonpoke.data.model.local.PokemonTypeModel
 import th.ac.up.melondev.melonpoke.data.repository.PokemonRepository
 import th.ac.up.melondev.melonpoke.utill.NetworkResponse
-import th.ac.up.melondev.melonpoke.utill.PokemonTypeLibrary
 
 class DetailViewModel : ViewModel() {
 
     private val repository: PokemonRepository = PokemonRepository()
 
     fun loadPokemonDetail(id: Int) = liveData(Dispatchers.IO) {
+
         emit(NetworkResponse.loading())
         val response: Response<PokemonDetailModel> = repository.getPokemonDetail(id)
         if (response.isSuccessful) {

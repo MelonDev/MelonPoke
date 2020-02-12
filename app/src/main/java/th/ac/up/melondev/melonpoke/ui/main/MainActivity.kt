@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import th.ac.up.melondev.melonpoke.R
 import th.ac.up.melondev.melonpoke.data.viewmodel.DetailViewModel
